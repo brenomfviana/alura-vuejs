@@ -10,7 +10,7 @@
         />
       </div>
       <div class="column">
-        <Timer @onTimerFinishing="markTaskAsDone" />
+        <Timer @onTimerEnd="markTaskAsDone" />
       </div>
     </div>
   </div>
@@ -22,6 +22,7 @@ import Timer from "./Timer.vue";
 
 export default defineComponent({
   name: "Form",
+  emits: ["onSaveTask"],
   components: {
     Timer,
   },
@@ -34,6 +35,10 @@ export default defineComponent({
     markTaskAsDone(elapsedTime: number): void {
       console.log(`Task time: ${elapsedTime}.`);
       console.log(`Task description: ${this.description}.`);
+      this.$emit("onSaveTask", {
+        durationInSeconds: elapsedTime,
+        description: this.description,
+      });
     },
   },
 });

@@ -22,7 +22,7 @@ import Chronometer from "./Chronometer.vue";
 
 export default defineComponent({
   name: "Timer",
-  emits: ["onTimerFinishing"],
+  emits: ["onTimerEnd"],
   components: {
     Chronometer,
   },
@@ -45,7 +45,7 @@ export default defineComponent({
       console.log("finishing...");
       this.isRunning = false;
       clearInterval(this.chronometer);
-      this.$emit("onTimerFinishing", this.timeInSeconds);
+      this.$emit("onTimerEnd", this.timeInSeconds);
       this.timeInSeconds = 0;
     },
   },
