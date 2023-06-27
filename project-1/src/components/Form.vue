@@ -6,10 +6,11 @@
           type="text"
           class="input"
           placeholder="Which task do you want to start?"
+          v-model="description"
         />
       </div>
       <div class="column">
-        <Timer />
+        <Timer @onTimerFinishing="markTaskAsDone" />
       </div>
     </div>
   </div>
@@ -23,6 +24,17 @@ export default defineComponent({
   name: "Form",
   components: {
     Timer,
+  },
+  data() {
+    return {
+      description: "",
+    };
+  },
+  methods: {
+    markTaskAsDone(elapsedTime: number): void {
+      console.log(`Task time: ${elapsedTime}.`);
+      console.log(`Task description: ${this.description}.`);
+    },
   },
 });
 </script>
