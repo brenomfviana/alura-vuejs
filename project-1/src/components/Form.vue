@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box form">
     <div class="columns">
       <div class="column is-8" role="form" aria-label="New task form">
         <input
@@ -43,3 +43,10 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.form {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+</style>
