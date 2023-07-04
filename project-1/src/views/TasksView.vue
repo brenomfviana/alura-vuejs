@@ -8,13 +8,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ITask from "../interfaces/ITask";
+import type ITask from "../interfaces/ITask";
 import Box from "../components/Box.vue";
 import Form from "../components/Form.vue";
 import Task from "../components/Task.vue";
 
 export default defineComponent({
-  name: "App",
+  name: "TasksView",
   components: {
     Box,
     Form,
