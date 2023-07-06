@@ -24,6 +24,11 @@
                 <i class="fas fa-pencil-alt"></i>
               </span>
             </router-link>
+            <button class="button ml-2 is-danger" @click="remove(project.id)">
+              <span class="icon is-small">
+                <i class="fas fa-trash"></i>
+              </span>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -37,9 +42,15 @@ import { useStore } from "@/store";
 
 export default defineComponent({
   name: "ListView",
+  methods: {
+    remove(id) {
+      this.store.commit("REMOVE_PROJECT", id);
+    },
+  },
   setup() {
     const store = useStore();
     return {
+      store,
       projects: computed(() => store.state.projects),
     };
   },

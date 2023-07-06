@@ -24,6 +24,9 @@ export const store = createStore<State>({
       const index = state.projects.findIndex((proj) => proj.id == project.id);
       state.projects[index] = project;
     },
+    REMOVE_PROJECT(state, projectId: string) {
+      state.projects = state.projects.filter((proj) => proj.id != projectId);
+    },
   },
 });
 
