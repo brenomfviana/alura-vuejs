@@ -44,12 +44,12 @@ export default defineComponent({
   methods: {
     save() {
       if (this.id) {
-        this.store.commit("EDIT_PROJECT", {
+        this.store.commit(this.store.mutations.EDIT_PROJECT, {
           id: this.id,
           name: this.projectName,
         });
       } else {
-        this.store.commit("ADD_PROJECT", this.projectName);
+        this.store.commit(this.store.mutations.ADD_PROJECT, this.projectName);
       }
       this.projectName = "";
       this.$router.push("/projects");

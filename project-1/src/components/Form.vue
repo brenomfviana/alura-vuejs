@@ -54,7 +54,7 @@ export default defineComponent({
       this.$emit("onSaveTask", {
         durationInSeconds: elapsedTime,
         description: this.description,
-        project: this.projects.find((project) => project.id == this.projectId),
+        project: this.projects.find((proj) => proj.id == this.projectId),
       });
     },
   },
