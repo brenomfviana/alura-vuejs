@@ -6,6 +6,7 @@ import {
 import TasksView from "../views/TasksView.vue";
 import ProjectsView from "../views/ProjectsView.vue";
 import FormView from "../views/projects/FormView.vue";
+import ListView from "../views/projects/ListView.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -15,19 +16,25 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/projects",
-    name: "Projects",
     component: ProjectsView,
-  },
-  {
-    path: "/projects/new",
-    name: "New Project",
-    component: FormView,
-  },
-  {
-    path: "/projects/:id",
-    name: "Edit Project",
-    component: FormView,
-    props: true,
+    children: [
+      {
+        path: "",
+        name: "Projects",
+        component: ListView,
+      },
+      {
+        path: "new",
+        name: "New Project",
+        component: FormView,
+      },
+      {
+        path: ":id",
+        name: "Edit Project",
+        component: FormView,
+        props: true,
+      },
+    ],
   },
 ];
 

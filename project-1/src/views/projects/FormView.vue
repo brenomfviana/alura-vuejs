@@ -1,6 +1,5 @@
 <template>
-  <section class="projects">
-    <h1 class="title">Projects</h1>
+  <section>
     <form @submit.prevent="save">
       <div class="field">
         <label for="projectName" class="label">Project Name</label>
