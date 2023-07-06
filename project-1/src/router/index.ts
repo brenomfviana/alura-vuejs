@@ -5,6 +5,7 @@ import {
 } from "vue-router";
 import TasksView from "../views/TasksView.vue";
 import ProjectsView from "../views/ProjectsView.vue";
+import FormView from "../views/projects/FormView.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -16,6 +17,17 @@ const routes: RouteRecordRaw[] = [
     path: "/projects",
     name: "Projects",
     component: ProjectsView,
+  },
+  {
+    path: "/projects/new",
+    name: "New Project",
+    component: FormView,
+  },
+  {
+    path: "/projects/:id",
+    name: "Edit Project",
+    component: FormView,
+    props: true,
   },
 ];
 
