@@ -13,7 +13,7 @@ export default {
         this.categories = await getCategories();
     },
     components: { CardCategory },
-    emits: ["addIngredient"],
+    emits: ["addIngredient", "removeIngredient"],
 }
 </script>
 
@@ -32,6 +32,7 @@ export default {
                 <CardCategory
                   :category="category"
                   @add-ingredient="$emit('addIngredient', $event)"
+                  @remove-ingredient="$emit('removeIngredient', $event)"
                 />
             </li>
         </ul>

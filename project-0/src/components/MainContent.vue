@@ -12,6 +12,9 @@ export default {
     methods: {
       addIngredient(ingredient: string) {
         this.ingredients.push(ingredient);
+      },
+      removeIngredient(ingredient: string) {
+        this.ingredients.pop(ingredient);
       }
     }
 }
@@ -23,6 +26,7 @@ export default {
 
         <IngredientSelector
           @add-ingredient="addIngredient"
+          @remove-ingredient="removeIngredient"
         />
     </main>
 </template>
