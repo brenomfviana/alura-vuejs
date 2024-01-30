@@ -1,43 +1,39 @@
 <script lang="ts">
-import Tag from './Tag.vue';
+import Tag from "./Tag.vue";
 
 export default {
-    data() {
-        return {
-            selected: false,
-        };
-    },
-    props: {
-        ingredient: { type: String, required: true }
-    },
-    components: { Tag },
-    methods: {
-        onClick() {
-            this.selected = !this.selected;
+  data() {
+    return {
+      selected: false,
+    };
+  },
+  props: {
+    ingredient: { type: String, required: true },
+  },
+  components: { Tag },
+  methods: {
+    onClick() {
+      this.selected = !this.selected;
 
-            if (this.selected) {
-                this.$emit("addIngredient", this.ingredient);
-            } else {
-                this.$emit("removeIngredient", this.ingredient);
-            }
-        }
+      if (this.selected) {
+        this.$emit("addIngredient", this.ingredient);
+      } else {
+        this.$emit("removeIngredient", this.ingredient);
+      }
     },
-    emits: ["addIngredient", "removeIngredient"],
-}
+  },
+  emits: ["addIngredient", "removeIngredient"],
+};
 </script>
 
 <template>
-    <button
-        class="ingrediente"
-        @click="onClick"
-        :aria-pressed="selected"
-    >
-        <Tag :text="ingredient" :active="selected"/>
-    </button>
+  <button class="ingrediente" @click="onClick" :aria-pressed="selected">
+    <Tag :text="ingredient" :active="selected" />
+  </button>
 </template>
 
 <style scoped>
 .ingrediente {
-    cursor: pointer;
+  cursor: pointer;
 }
 </style>

@@ -1,37 +1,41 @@
 <script lang="ts">
-import type { PropType } from 'vue';
-import Tag from './Tag.vue';
+import type { PropType } from "vue";
+import Tag from "./Tag.vue";
 
 export default {
-    props: {
-        ingredients: { type: Array as PropType<string[]>, required: true }
-    },
-    components: { Tag }
-}
+  props: {
+    ingredients: { type: Array as PropType<string[]>, required: true },
+  },
+  components: { Tag },
+};
 </script>
 
 <template>
-    <section>
-        <span class="subtitulo-lg sua-lista-texto">
-            Sua lista:
-        </span>
-        <ul v-if="ingredients.length" class="ingredientes-sua-lista">
-            <li v-for="ingrediente in ingredients" :key="ingrediente" class="ingrediente">
-                <Tag :text="ingrediente" active />
-            </li>
-        </ul>
+  <section>
+    <span class="subtitulo-lg sua-lista-texto"> Sua lista: </span>
+    <ul v-if="ingredients.length" class="ingredientes-sua-lista">
+      <li
+        v-for="ingrediente in ingredients"
+        :key="ingrediente"
+        class="ingrediente"
+      >
+        <Tag :text="ingrediente" active />
+      </li>
+    </ul>
 
-        <p v-else class="paragrafo lista-vazia">
-            <img src="../assets/images/icones/lista-vazia.svg" alt="Ícone de pesquisa">
-            Sua lista está vazia, selecione ingredientes para iniciar.
-        </p>
-    </section>
+    <p v-else class="paragrafo lista-vazia">
+      <img
+        src="../assets/images/icones/lista-vazia.svg"
+        alt="Ícone de pesquisa"
+      />
+      Sua lista está vazia, selecione ingredientes para iniciar.
+    </p>
+  </section>
 </template>
-
 
 <style scoped>
 .sua-lista-texto {
-  color: var(--coral, #F0633C);
+  color: var(--coral, #f0633c);
   display: block;
   text-align: center;
   margin-bottom: 1.5rem;
@@ -51,7 +55,7 @@ export default {
   flex-wrap: wrap;
   gap: 0.25rem;
 
-  color: var(--coral, #F0633C);
+  color: var(--coral, #f0633c);
   text-align: center;
 }
 </style>

@@ -1,41 +1,41 @@
 <script lang="ts">
-import IngredientSelector from './IngredientSelector.vue';
-import YourList from './YourList.vue';
+import IngredientSelector from "./IngredientSelector.vue";
+import YourList from "./YourList.vue";
 
 export default {
-    data() {
-        return {
-          ingredients: [] as string[]
-        };
+  data() {
+    return {
+      ingredients: [] as string[],
+    };
+  },
+  components: { IngredientSelector, YourList },
+  methods: {
+    addIngredient(ingredient: string) {
+      this.ingredients.push(ingredient);
     },
-    components: { IngredientSelector, YourList },
-    methods: {
-      addIngredient(ingredient: string) {
-        this.ingredients.push(ingredient);
-      },
-      removeIngredient(ingredient: string) {
-        this.ingredients.pop(ingredient);
-      }
-    }
-}
+    removeIngredient(ingredient: string) {
+      this.ingredients.pop(ingredient);
+    },
+  },
+};
 </script>
 
 <template>
-    <main class="conteudo-principal">
-        <YourList :ingredients="ingredients"/>
+  <main class="conteudo-principal">
+    <YourList :ingredients="ingredients" />
 
-        <IngredientSelector
-          @add-ingredient="addIngredient"
-          @remove-ingredient="removeIngredient"
-        />
-    </main>
+    <IngredientSelector
+      @add-ingredient="addIngredient"
+      @remove-ingredient="removeIngredient"
+    />
+  </main>
 </template>
 
 <style scoped>
 .conteudo-principal {
   padding: 6.5rem 7.5rem;
   border-radius: 3.75rem 3.75rem 0rem 0rem;
-  background: var(--creme, #FFFAF3);
+  background: var(--creme, #fffaf3);
   color: var(--cinza, #444);
 
   display: flex;
@@ -45,7 +45,7 @@ export default {
 }
 
 .sua-lista-texto {
-  color: var(--coral, #F0633C);
+  color: var(--coral, #f0633c);
   display: block;
   text-align: center;
   margin-bottom: 1.5rem;
@@ -65,7 +65,7 @@ export default {
   flex-wrap: wrap;
   gap: 0.25rem;
 
-  color: var(--coral, #F0633C);
+  color: var(--coral, #f0633c);
   text-align: center;
 }
 

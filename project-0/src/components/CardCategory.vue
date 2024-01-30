@@ -1,35 +1,39 @@
 <script lang="ts">
-import ICategory from '@/interfaces/ICategory';
-import type { PropType } from 'vue';
-import SelectableIngredient from './SelectableIngredient.vue';
+import ICategory from "@/interfaces/ICategory";
+import type { PropType } from "vue";
+import SelectableIngredient from "./SelectableIngredient.vue";
 
 export default {
-    props: {
-        category: { type: Object as PropType<ICategory>, required: true }
-    },
-    components: { SelectableIngredient },
-    emits: ["addIngredient", "removeIngredient"],
-}
+  props: {
+    category: { type: Object as PropType<ICategory>, required: true },
+  },
+  components: { SelectableIngredient },
+  emits: ["addIngredient", "removeIngredient"],
+};
 </script>
 
 <template>
-    <article class="categoria">
-        <header class="categoria__cabecalho">
-            <img :src="`/images/icones/categorias_ingredientes/${category.imagem}`" alt="" class="categoria__imagem">
+  <article class="categoria">
+    <header class="categoria__cabecalho">
+      <img
+        :src="`/images/icones/categorias_ingredientes/${category.imagem}`"
+        alt=""
+        class="categoria__imagem"
+      />
 
-            <h2 class="paragrafo-lg categoria__nome">{{ category.nome }}</h2>
-        </header>
+      <h2 class="paragrafo-lg categoria__nome">{{ category.nome }}</h2>
+    </header>
 
-        <ul class="categoria__ingredientes">
-            <li v-for="ingredient in category.ingredientes" :key="ingredient">
-                <SelectableIngredient
-                  :ingredient="ingredient"
-                  @add-ingredient="$emit('addIngredient', $event)"
-                  @remove-ingredient="$emit('removeIngredient', $event)"
-                />
-            </li>
-        </ul>
-    </article>
+    <ul class="categoria__ingredientes">
+      <li v-for="ingredient in category.ingredientes" :key="ingredient">
+        <SelectableIngredient
+          :ingredient="ingredient"
+          @add-ingredient="$emit('addIngredient', $event)"
+          @remove-ingredient="$emit('removeIngredient', $event)"
+        />
+      </li>
+    </ul>
+  </article>
 </template>
 
 <style scoped>
@@ -37,7 +41,7 @@ export default {
   width: 19.5rem;
   padding: 1rem;
   border-radius: 1rem;
-  background: var(--branco, #FFF);
+  background: var(--branco, #fff);
   box-shadow: 4px 4px 10px 0px rgba(68, 68, 68, 0.05);
   height: 100%;
 
@@ -60,7 +64,7 @@ export default {
 
 .categoria__nome {
   text-align: center;
-  color: var(--verde-medio, #3D6D4A);
+  color: var(--verde-medio, #3d6d4a);
   font-weight: 700;
 }
 
