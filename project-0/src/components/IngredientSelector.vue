@@ -1,16 +1,18 @@
 <script lang="ts">
 import { getCategories  } from '@/http/index';
 import type ICategory from "@/interfaces/ICategory";
+import CardCategory from './CardCategory.vue';
 
 export default {
     data() {
         return {
-          categories: [] as ICategory[],
-        }
+            categories: [] as ICategory[],
+        };
     },
     async created() {
         this.categories = await getCategories();
-    }
+    },
+    components: { CardCategory }
 }
 </script>
 
@@ -20,13 +22,13 @@ export default {
             Ingredientes
         </h1>
 
-        <p class="paragrafo-lg intrucoes">
+        <p class="paragrafo-lg instrucoes">
             Selecione abaixo os ingredientes que você quer usar nesta receita:
         </p>
 
-        <ul class="categoriais">
+        <ul class="categorias">
             <li v-for="category in categories" :key="category.nome">
-                {{ category.nome }}
+                <CardCategory :category="category"/>
             </li>
         </ul>
 
