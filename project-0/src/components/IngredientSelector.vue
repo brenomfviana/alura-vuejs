@@ -5,6 +5,7 @@ import CardCategory from "./CardCategory.vue";
 import MainButton from "./MainButton.vue";
 
 export default {
+  name: "IngredientSelector",
   data() {
     return {
       categories: [] as ICategory[],
@@ -14,7 +15,7 @@ export default {
     this.categories = await getCategories();
   },
   components: { CardCategory, MainButton },
-  emits: ["addIngredient", "removeIngredient"],
+  emits: ["addIngredient", "removeIngredient", "getRecipes"],
 };
 </script>
 
@@ -40,7 +41,7 @@ export default {
       *Atenção: consideramos que você tem em casa sal, pimenta e água.
     </p>
 
-    <MainButton text="Buscar receitas!" />
+    <MainButton text="Buscar receitas!" @click="$emit('getRecipes')" />
   </section>
 </template>
 

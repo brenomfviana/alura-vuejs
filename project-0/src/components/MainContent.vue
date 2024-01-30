@@ -1,20 +1,27 @@
 <script lang="ts">
 import IngredientSelector from "./IngredientSelector.vue";
+import ShowRecipes from "./ShowRecipes.vue";
 import YourList from "./YourList.vue";
+
+type Page = "IngredientSelector" | "ShowRecipes";
 
 export default {
   data() {
     return {
       ingredients: [] as string[],
+      content: "IngredientSelector" as Page,
     };
   },
-  components: { IngredientSelector, YourList },
+  components: { IngredientSelector, YourList, ShowRecipes },
   methods: {
     addIngredient(ingredient: string) {
       this.ingredients.push(ingredient);
     },
     removeIngredient(ingredient: string) {
       this.ingredients.pop(ingredient);
+    },
+    navigate(page: Page) {
+      this.content = page;
     },
   },
 };
@@ -24,10 +31,20 @@ export default {
   <main class="conteudo-principal">
     <YourList :ingredients="ingredients" />
 
-    <IngredientSelector
-      @add-ingredient="addIngredient"
-      @remove-ingredient="removeIngredient"
-    />
+    <KeepAlive include="IngredientSelector">
+      <IngredientSelector
+        v-if="content == 'IngredientSelector'"
+        @add-ingredient="addIngredient"
+        @remove-ingredient="removeIngredient"
+        @get-recipes="navigate('ShowRecipes')"
+      />
+
+      <ShowRecipes
+        v-else-if="content == 'ShowRecipes'"
+        :ingredients="ingredients"
+        @edit-recipes="navigate('IngredientSelector')"
+      />
+    </KeepAlive>
   </main>
 </template>
 
