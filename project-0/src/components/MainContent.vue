@@ -5,18 +5,25 @@ import YourList from './YourList.vue';
 export default {
     data() {
         return {
-          ingredients: ['Alho', 'Manteiga', 'Orégano']
+          ingredients: [] as string[]
         };
     },
-    components: { IngredientSelector, YourList }
+    components: { IngredientSelector, YourList },
+    methods: {
+      addIngredient(ingredient: string) {
+        this.ingredients.push(ingredient);
+      }
+    }
 }
 </script>
 
 <template>
     <main class="conteudo-principal">
-        <YourList :ingredients="['Alho', 'Manteiga', 'Orégano']"/>
+        <YourList :ingredients="ingredients"/>
 
-        <IngredientSelector/>
+        <IngredientSelector
+          @add-ingredient="addIngredient"
+        />
     </main>
 </template>
 
