@@ -34,6 +34,8 @@
 import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
 import Timer from "./Timer.vue";
+import { NOTIFY } from "@/store/mutations";
+import { NotificationType } from "@/interfaces/INotification";
 
 export default defineComponent({
   name: "Form",
@@ -49,18 +51,29 @@ export default defineComponent({
   },
   methods: {
     markTaskAsDone(elapsedTime: number): void {
+      const project = this.projects.find((proj) => proj.id == this.projectId);
+      if (!project) {
+        this.store.commit(NOTIFY, {
+          title: "Ops!",
+          text: "Select a project to finalize the task!",
+          ntype: NotificationType.FAIL,
+        });
+        return;
+      }
       console.log(`Task time: ${elapsedTime}.`);
       console.log(`Task description: ${this.description}.`);
       this.$emit("onSaveTask", {
         durationInSeconds: elapsedTime,
         description: this.description,
-        project: this.projects.find((proj) => proj.id == this.projectId),
+        project: project,
       });
+      this.description = "";
     },
   },
   setup() {
     const store = useStore();
     return {
+      store,
       projects: computed(() => store.state.projects),
     };
   },

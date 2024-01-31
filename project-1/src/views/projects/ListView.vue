@@ -39,12 +39,13 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
+import { REMOVE_PROJECT } from "@/store/mutations";
 
 export default defineComponent({
   name: "ListView",
   methods: {
     remove(id) {
-      this.store.commit(this.store.mutations.REMOVE_PROJECT, id);
+      this.store.commit(REMOVE_PROJECT, id);
     },
   },
   setup() {

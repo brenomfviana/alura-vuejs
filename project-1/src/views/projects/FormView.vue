@@ -20,6 +20,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
+import { NotificationType } from "@/interfaces/INotification";
+import { ADD_PROJECT, EDIT_PROJECT, NOTIFY } from "@/store/mutations";
 
 export default defineComponent({
   name: "FormView",
@@ -44,14 +46,20 @@ export default defineComponent({
   methods: {
     save() {
       if (this.id) {
-        this.store.commit(this.store.mutations.EDIT_PROJECT, {
+        this.store.commit(EDIT_PROJECT, {
           id: this.id,
           name: this.projectName,
         });
       } else {
-        this.store.commit(this.store.mutations.ADD_PROJECT, this.projectName);
+        console.log(this.store);
+        this.store.commit(ADD_PROJECT, this.projectName);
       }
       this.projectName = "";
+      this.store.commit(NOTIFY, {
+        title: "Your project was save!",
+        text: "Done :) Your project is available!",
+        ntype: NotificationType.SUCCESS,
+      });
       this.$router.push("/projects");
     },
   },
