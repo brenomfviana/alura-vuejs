@@ -22,7 +22,7 @@ import { defineComponent } from "vue";
 import { useStore } from "@/store";
 import { NotificationType } from "@/interfaces/INotification";
 import { ADD_PROJECT, EDIT_PROJECT, NOTIFY } from "@/store/mutations";
-import { notificationMixin } from "@/mixins/notify";
+import useNotifier from "@/hooks/notifier";
 
 export default defineComponent({
   name: "FormView",
@@ -44,9 +44,6 @@ export default defineComponent({
       projectName: "",
     };
   },
-  mixins: [
-    notificationMixin,
-  ],
   methods: {
     save() {
       if (this.id) {
@@ -69,8 +66,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const { notify } = useNotifier();
     return {
       store,
+      notify,
     };
   },
 });
