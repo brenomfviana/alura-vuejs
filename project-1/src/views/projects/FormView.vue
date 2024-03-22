@@ -22,6 +22,7 @@ import { defineComponent } from "vue";
 import { useStore } from "@/store";
 import { NotificationType } from "@/interfaces/INotification";
 import { ADD_PROJECT, EDIT_PROJECT, NOTIFY } from "@/store/mutations";
+import { notificationMixin } from "@/mixins/notify";
 
 export default defineComponent({
   name: "FormView",
@@ -43,6 +44,9 @@ export default defineComponent({
       projectName: "",
     };
   },
+  mixins: [
+    notificationMixin,
+  ],
   methods: {
     save() {
       if (this.id) {
@@ -55,11 +59,11 @@ export default defineComponent({
         this.store.commit(ADD_PROJECT, this.projectName);
       }
       this.projectName = "";
-      this.store.commit(NOTIFY, {
-        title: "Your project was save!",
-        text: "Done :) Your project is available!",
-        ntype: NotificationType.SUCCESS,
-      });
+      this.notify(
+        NotificationType.SUCCESS,
+        "Your project was save!",
+        "Done :) Your project is available!",
+      );
       this.$router.push("/projects");
     },
   },
