@@ -2,6 +2,9 @@
   <Box>
     <div class="columns">
       <div class="column is-7">{{ task.description || "Sem descrição" }}</div>
+      <div class="column is-3">
+        {{ task.project?.name || "Not Defined" }}
+      </div>
       <div class="column">
         <Chronometer :timeInSeconds="task.durationInSeconds" />
       </div>
