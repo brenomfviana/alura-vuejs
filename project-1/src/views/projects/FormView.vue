@@ -18,7 +18,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
 import { NotificationType } from "@/interfaces/INotification";
 import { useStore } from "@/store";
 import { REGISTER_PROJECT, CHANGE_PROJECT } from "@/store/actions";
@@ -28,53 +29,51 @@ export default defineComponent({
   name: "FormView",
   props: {
     id: {
-      type: Number,
+      type: String,
     },
   },
-  mounted() {
-    if (this.id) {
-      const project = this.store.state.project.projects.find(
-        (p) => p.id == this.id
+  setup(props) {
+    const router = useRouter();
+    const store = useStore();
+    const { notify } = useNotifier();
+
+    const projectName = ref("");
+
+    if (props.id) {
+      const project = store.state.project.projects.find(
+        (p) => p.id == props.id
       );
-      this.projectName = project?.name || "";
+      projectName.value = project?.name || "";
     }
-  },
-  data() {
-    return {
-      projectName: "",
-    };
-  },
-  methods: {
-    save() {
-      if (this.id) {
-        this.store
-          .dispatch(CHANGE_PROJECT, {
-            id: this.id,
-            name: this.projectName,
-          })
-          .then(() => this.process());
-      } else {
-        this.store
-          .dispatch(REGISTER_PROJECT, this.projectName)
-          .then(() => this.process());
-      }
-    },
-    process() {
-      this.projectName = "";
-      this.notify(
+
+    const process = () => {
+      projectName.value = "";
+      notify(
         NotificationType.SUCCESS,
         "Your project was save!",
         "Done :) Your project is available!"
       );
-      this.$router.push("/projects");
-    },
-  },
-  setup() {
-    const store = useStore();
-    const { notify } = useNotifier();
+      router.push("/projects");
+    };
+
+    const save = () => {
+      if (props.id) {
+        store
+          .dispatch(CHANGE_PROJECT, {
+            id: props.id,
+            name: projectName.value,
+          })
+          .then(() => process());
+      } else {
+        store
+          .dispatch(REGISTER_PROJECT, projectName.value)
+          .then(() => process());
+      }
+    };
+
     return {
-      store,
-      notify,
+      projectName,
+      save,
     };
   },
 });

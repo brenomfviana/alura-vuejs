@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { NotificationType } from "@/interfaces/INotification";
 import { useStore } from "@/store";
 import { NOTIFY } from "@/store/mutations";
@@ -43,38 +43,37 @@ export default defineComponent({
   components: {
     Timer,
   },
-  data() {
-    return {
-      description: "",
-      projectId: "",
-    };
-  },
-  methods: {
-    markTaskAsDone(elapsedTime: number): void {
-      const project = this.projects.find((p) => p.id == this.projectId);
+  setup(props, { emit }) {
+    const store = useStore();
+
+    const description = ref("");
+    const projectId = ref("");
+
+    const projects = computed(() => store.state.project.projects);
+
+    const markTaskAsDone = (elapsedTime: number): void => {
+      const project = projects.value.find((p) => p.id == projectId.value);
       if (!project) {
-        this.store.commit(NOTIFY, {
+        store.commit(NOTIFY, {
           title: "Ops!",
           text: "Select a project to finalize the task!",
           ntype: NotificationType.FAIL,
         });
         return;
       }
-      console.log(`Task time: ${elapsedTime}.`);
-      console.log(`Task description: ${this.description}.`);
-      this.$emit("onSaveTask", {
+      emit("onSaveTask", {
         durationInSeconds: elapsedTime,
-        description: this.description,
+        description: description.value,
         project: project,
       });
-      this.description = "";
-    },
-  },
-  setup() {
-    const store = useStore();
+      description.value = "";
+    };
+
     return {
-      store,
-      projects: computed(() => store.state.project.projects),
+      description,
+      projectId,
+      projects,
+      markTaskAsDone,
     };
   },
 });

@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import type ITask from "../interfaces/ITask";
 import { useStore } from "@/store";
 import {
@@ -64,41 +64,42 @@ export default defineComponent({
     Form,
     Task,
   },
-  data() {
-    return {
-      selectedTask: null as ITask | null,
-    };
-  },
-  computed: {
-    hasTasks(): boolean {
-      return this.tasks.length > 0;
-    },
-  },
-  methods: {
-    saveTask(task: ITask) {
-      task.id = new Date().toISOString();
-      this.store.dispatch(REGISTER_TASK, task);
-    },
-    updateTask() {
-      this.store
-        .dispatch(CHANGE_TASK, this.selectedTask)
-        .then(() => this.closeModal());
-    },
-    selectTask(task: ITask) {
-      this.selectedTask = task;
-    },
-    closeModal() {
-      this.selectedTask = null;
-    },
-  },
   setup() {
     const store = useStore();
     store.dispatch(GET_TASKS);
     store.dispatch(GET_PROJECTS);
 
+    const selectedTask = ref();
+
+    const tasks = computed(() => store.state.task.tasks);
+
+    const hasTasks = (): boolean => {
+      return tasks.value.length > 0;
+    };
+
+    const closeModal = () => {
+      selectedTask.value = null;
+    };
+
+    const saveTask = (task: ITask) => {
+      task.id = new Date().toISOString();
+      store.dispatch(REGISTER_TASK, task);
+    };
+    const updateTask = () => {
+      store.dispatch(CHANGE_TASK, selectedTask.value).then(() => closeModal());
+    };
+    const selectTask = (task: ITask) => {
+      selectedTask.value = task;
+    };
+
     return {
-      store,
-      tasks: computed(() => store.state.task.tasks),
+      selectedTask,
+      tasks,
+      hasTasks,
+      saveTask,
+      updateTask,
+      selectTask,
+      closeModal,
     };
   },
 });
