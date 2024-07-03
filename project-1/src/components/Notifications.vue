@@ -17,9 +17,9 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/store";
 import { computed, defineComponent } from "vue";
 import { NotificationType } from "@/interfaces/INotification";
+import { useStore } from "@/store";
 
 export default defineComponent({
   name: "Notifications",

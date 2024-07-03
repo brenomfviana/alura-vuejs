@@ -32,10 +32,10 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { useStore } from "@/store";
-import Timer from "./Timer.vue";
-import { NOTIFY } from "@/store/mutations";
 import { NotificationType } from "@/interfaces/INotification";
+import { useStore } from "@/store";
+import { NOTIFY } from "@/store/mutations";
+import Timer from "./Timer.vue";
 
 export default defineComponent({
   name: "Form",
@@ -51,7 +51,7 @@ export default defineComponent({
   },
   methods: {
     markTaskAsDone(elapsedTime: number): void {
-      const project = this.projects.find((proj) => proj.id == this.projectId);
+      const project = this.projects.find((p) => p.id == this.projectId);
       if (!project) {
         this.store.commit(NOTIFY, {
           title: "Ops!",
@@ -74,7 +74,7 @@ export default defineComponent({
     const store = useStore();
     return {
       store,
-      projects: computed(() => store.state.projects),
+      projects: computed(() => store.state.project.projects),
     };
   },
 });

@@ -46,16 +46,16 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import type ITask from "../interfaces/ITask";
-import Box from "../components/Box.vue";
-import Form from "../components/Form.vue";
-import Task from "../components/Task.vue";
+import { useStore } from "@/store";
 import {
   GET_PROJECTS,
   GET_TASKS,
   REGISTER_TASK,
   CHANGE_TASK,
 } from "@/store/actions";
-import { useStore } from "@/store";
+import Box from "../components/Box.vue";
+import Form from "../components/Form.vue";
+import Task from "../components/Task.vue";
 
 export default defineComponent({
   name: "TasksView",
@@ -76,6 +76,7 @@ export default defineComponent({
   },
   methods: {
     saveTask(task: ITask) {
+      task.id = new Date().toISOString();
       this.store.dispatch(REGISTER_TASK, task);
     },
     updateTask() {
@@ -97,7 +98,7 @@ export default defineComponent({
 
     return {
       store,
-      tasks: computed(() => store.state.tasks),
+      tasks: computed(() => store.state.task.tasks),
     };
   },
 });

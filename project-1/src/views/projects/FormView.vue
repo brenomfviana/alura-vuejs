@@ -19,10 +19,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useStore } from "@/store";
 import { NotificationType } from "@/interfaces/INotification";
-import useNotifier from "@/hooks/notifier";
+import { useStore } from "@/store";
 import { REGISTER_PROJECT, CHANGE_PROJECT } from "@/store/actions";
+import useNotifier from "@/hooks/notifier";
 
 export default defineComponent({
   name: "FormView",
@@ -33,7 +33,7 @@ export default defineComponent({
   },
   mounted() {
     if (this.id) {
-      const project = this.store.state.projects.find(
+      const project = this.store.state.project.projects.find(
         (p) => p.id == this.id
       );
       this.projectName = project?.name || "";
