@@ -40,6 +40,7 @@
 import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
 import { REMOVE_PROJECT } from "@/store/mutations";
+import { GET_PROJECTS } from "@/store/actions";
 
 export default defineComponent({
   name: "ListView",
@@ -50,6 +51,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    store.dispatch(GET_PROJECTS);
+
     return {
       store,
       projects: computed(() => store.state.projects),
