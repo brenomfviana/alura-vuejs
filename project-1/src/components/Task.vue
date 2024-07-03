@@ -1,7 +1,7 @@
 <template>
   <Box>
     <div class="columns clickable" @click="clickTask">
-      <div class="column is-7">{{ task.description || "Sem descrição" }}</div>
+      <div class="column is-7">{{ task.description || "No Description" }}</div>
       <div class="column is-3">
         {{ task.project?.name || "Not Defined" }}
       </div>
