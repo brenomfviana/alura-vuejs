@@ -8,8 +8,8 @@ export const notificationMixin = {
       store.commit(NOTIFY, {
         title,
         text,
-        ntype
+        ntype,
       });
     },
-  }
-}
+  },
+};

@@ -2,8 +2,19 @@ import type { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore } from "vuex";
 import type IProject from "@/interfaces/IProject";
 import { INotification } from "@/interfaces/INotification";
-import { ADD_PROJECT, EDIT_PROJECT, REMOVE_PROJECT, DEFINE_PROJECTS, NOTIFY } from "./mutations";
-import { GET_PROJECTS } from "./actions";
+import {
+  ADD_PROJECT,
+  EDIT_PROJECT,
+  DELETE_PROJECT,
+  DEFINE_PROJECTS,
+  NOTIFY,
+} from "./mutations";
+import {
+  GET_PROJECTS,
+  REGISTER_PROJECT,
+  CHANGE_PROJECT,
+  REMOVE_PROJECT,
+} from "./actions";
 import http from "@/http";
 
 interface State {
@@ -30,7 +41,7 @@ export const store = createStore<State>({
       const index = state.projects.findIndex((proj) => proj.id == project.id);
       state.projects[index] = project;
     },
-    [REMOVE_PROJECT](state, projectId: string) {
+    [DELETE_PROJECT](state, projectId: string) {
       state.projects = state.projects.filter((proj) => proj.id != projectId);
     },
     [DEFINE_PROJECTS](state, projects: IProject[]) {
@@ -48,10 +59,24 @@ export const store = createStore<State>({
     },
   },
   actions: {
-    [GET_PROJECTS] ({ commit }) {
-      http.get("projects")
-        .then(response => commit(DEFINE_PROJECTS, response.data))
-    }
+    [GET_PROJECTS]({ commit }) {
+      http
+        .get("projects")
+        .then((response) => commit(DEFINE_PROJECTS, response.data));
+    },
+    [REGISTER_PROJECT](context, projectName: string) {
+      return http.post("/projects", {
+        name: projectName,
+      });
+    },
+    [CHANGE_PROJECT](context, project: IProject) {
+      return http.put(`/projects/${project.id}`, project);
+    },
+    [REMOVE_PROJECT]({ commit }, id: string) {
+      return http.delete(`/projects/${id}`).then(() => {
+        commit(DELETE_PROJECT, id);
+      });
+    },
   },
 });
 
