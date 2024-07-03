@@ -39,7 +39,6 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "@/store";
-import { DELETE_PROJECT } from "@/store/mutations";
 import { GET_PROJECTS, REMOVE_PROJECT } from "@/store/actions";
 
 export default defineComponent({

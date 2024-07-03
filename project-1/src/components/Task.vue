@@ -1,6 +1,6 @@
 <template>
   <Box>
-    <div class="columns">
+    <div class="columns clickable" @click="clickTask">
       <div class="column is-7">{{ task.description || "Sem descrição" }}</div>
       <div class="column is-3">
         {{ task.project?.name || "Not Defined" }}
@@ -20,6 +20,7 @@ import Chronometer from "./Chronometer.vue";
 
 export default defineComponent({
   name: "Task",
+  emits: ["onTaskClicked"],
   components: {
     Box,
     Chronometer,
@@ -30,5 +31,16 @@ export default defineComponent({
       required: true,
     },
   },
+  methods: {
+    clickTask(): void {
+      this.$emit("onTaskClicked", this.task);
+    },
+  },
 });
 </script>
+
+<style scoped>
+.clickable {
+  cursor: pointer;
+}
+</style>

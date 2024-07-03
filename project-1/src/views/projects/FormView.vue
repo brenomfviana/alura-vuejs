@@ -28,13 +28,13 @@ export default defineComponent({
   name: "FormView",
   props: {
     id: {
-      type: String,
+      type: Number,
     },
   },
   mounted() {
     if (this.id) {
       const project = this.store.state.projects.find(
-        (proj) => proj.id == this.id
+        (p) => p.id == this.id
       );
       this.projectName = project?.name || "";
     }

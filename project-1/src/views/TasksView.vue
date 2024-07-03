@@ -1,17 +1,61 @@
 <template>
   <Form @onSaveTask="saveTask" />
   <div class="list">
-    <Task v-for="(task, index) in tasks" :key="index" :task="task" />
+    <Task
+      v-for="(task, index) in tasks"
+      :key="index"
+      :task="task"
+      @onTaskClicked="selectTask"
+    />
+    <div
+      class="modal"
+      :class="{ 'is-active': selectedTask }"
+      v-if="selectedTask"
+    >
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Edição de Tarefa</p>
+          <button
+            class="delete"
+            aria-label="close"
+            @click="closeModal"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="field">
+            <label for="description" class="label">Descrição</label>
+            <input
+              type="text"
+              class="input"
+              v-model="selectedTask.description"
+              id="description"
+            />
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success" @click="updateTask">Salvar</button>
+          <button class="button" @click="closeModal">Cancelar</button>
+        </footer>
+      </div>
+    </div>
     <Box v-if="!hasTasks"> You did not work today! </Box>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import type ITask from "../interfaces/ITask";
 import Box from "../components/Box.vue";
 import Form from "../components/Form.vue";
 import Task from "../components/Task.vue";
+import {
+  GET_PROJECTS,
+  GET_TASKS,
+  REGISTER_TASK,
+  CHANGE_TASK,
+} from "@/store/actions";
+import { useStore } from "@/store";
 
 export default defineComponent({
   name: "TasksView",
@@ -22,7 +66,7 @@ export default defineComponent({
   },
   data() {
     return {
-      tasks: [] as ITask[],
+      selectedTask: null as ITask | null,
     };
   },
   computed: {
@@ -32,8 +76,29 @@ export default defineComponent({
   },
   methods: {
     saveTask(task: ITask) {
-      this.tasks.push(task);
+      this.store.dispatch(REGISTER_TASK, task);
     },
+    updateTask() {
+      this.store
+        .dispatch(CHANGE_TASK, this.selectedTask)
+        .then(() => this.closeModal());
+    },
+    selectTask(task: ITask) {
+      this.selectedTask = task;
+    },
+    closeModal() {
+      this.selectedTask = null;
+    },
+  },
+  setup() {
+    const store = useStore();
+    store.dispatch(GET_TASKS);
+    store.dispatch(GET_PROJECTS);
+
+    return {
+      store,
+      tasks: computed(() => store.state.tasks),
+    };
   },
 });
 </script>

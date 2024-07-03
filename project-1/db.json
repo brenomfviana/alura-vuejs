@@ -8,5 +8,25 @@
       "id": "2",
       "name": "Alura Cookin' Up!"
     }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "description": "Configuração do Ambiente",
+      "durationInSeconds": 120,
+      "project": {
+        "id": 1,
+        "name": "Alura Tracker"
+      }
+    },
+    {
+      "id": "2",
+      "durationInSeconds": 6,
+      "description": "Refatoração Vue",
+      "project": {
+        "id": 1,
+        "name": "Alura Tracker"
+      }
+    }
   ]
 }
