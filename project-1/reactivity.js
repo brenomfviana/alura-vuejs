@@ -3,7 +3,7 @@
 const project = {
   id: 1,
   description: "Alura Tracker",
-}
+};
 
 const proxy = new Proxy(project, {
   get(obj, key) {
@@ -13,7 +13,7 @@ const proxy = new Proxy(project, {
   set(obj, key, value) {
     console.log(`Someone changed the project key to '${key}'.`);
     obj[key] = value;
-  }
-})
+  },
+});
 
-console.log(proxy.description)
+console.log(proxy.description);

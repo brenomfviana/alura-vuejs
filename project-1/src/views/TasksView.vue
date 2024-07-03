@@ -3,7 +3,12 @@
   <div class="list">
     <div class="field">
       <p class="control has-icons-left has-icons-right">
-        <input class="input" type="email" placeholder="Type to Search" v-model="filter" />
+        <input
+          class="input"
+          type="email"
+          placeholder="Type to Search"
+          v-model="filter"
+        />
         <span class="icon is-small is-left">
           <i class="fas fa-envelope"></i>
         </span>
@@ -18,38 +23,27 @@
       :task="task"
       @onTaskClicked="selectTask"
     />
-    <div
-      class="modal"
-      :class="{ 'is-active': selectedTask }"
-      v-if="selectedTask"
-    >
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Task Editing</p>
-          <button
-            class="delete"
-            aria-label="close"
-            @click="closeModal"
-          ></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="field">
-            <label for="description" class="label">Description</label>
-            <input
-              type="text"
-              class="input"
-              v-model="selectedTask.description"
-              id="description"
-            />
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button is-success" @click="updateTask">Save</button>
-          <button class="button" @click="closeModal">Cancel</button>
-        </footer>
-      </div>
-    </div>
+    <Modal :show="selectedTask != null">
+      <template v-slot:header>
+        <p class="modal-card-title">Task Editing</p>
+        <button class="delete" aria-label="close" @click="closeModal"></button>
+      </template>
+      <template v-slot:body>
+        <div class="field">
+          <label for="description" class="label">Description</label>
+          <input
+            type="text"
+            class="input"
+            v-model="selectedTask.description"
+            id="description"
+          />
+        </div>
+      </template>
+      <template v-slot:footer>
+        <button class="button is-success" @click="updateTask">Save</button>
+        <button class="button" @click="closeModal">Cancel</button>
+      </template>
+    </Modal>
     <Box v-if="!hasTasks"> You did not work today! </Box>
   </div>
 </template>
@@ -67,6 +61,7 @@ import {
 import Box from "../components/Box.vue";
 import Form from "../components/Form.vue";
 import Task from "../components/Task.vue";
+import Modal from "../components/Modal.vue";
 
 export default defineComponent({
   name: "TasksView",
@@ -74,6 +69,7 @@ export default defineComponent({
     Box,
     Form,
     Task,
+    Modal,
   },
   setup() {
     const store = useStore();
